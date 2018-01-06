@@ -305,6 +305,10 @@ namespace WifiTestTool
         }
         public void UpdateTxtMethod(string msg, TextBox txtBox)
         {
+            if (txtBox.Text.Length>1024)
+            {
+                txtBox.Text = txtBox.Text.Substring(txtBox.Text.Length - 1024, txtBox.Text.Length );
+            }
             txtBox.Text += (Environment.NewLine + msg);
 
             txtBox.SelectionStart = txtBox.Text.Length;
