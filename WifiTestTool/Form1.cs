@@ -412,5 +412,45 @@ namespace WifiTestTool
         
             serverSocket = null;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.serialPort1.IsOpen)
+                {
+                    this.serialPort1.Close();
+                }
+                else
+                {
+                    // 设置端口参数
+                    this.serialPort1.BaudRate = int.Parse(this.comboBox2.Text);
+                    this.serialPort1.DataBits = int.Parse(this.comboBox3.Text);
+                    this.serialPort1.StopBits = (StopBits)Enum.Parse(typeof(StopBits), this.comboBox4.Text);
+                    this.serialPort1.Parity = (Parity)Enum.Parse(typeof(Parity), this.comboBox5.Text);
+                    this.serialPort1.PortName = this.comportName.Text;
+                    //comport.Encoding = Encoding.ASCII;
+
+                    //打开端口
+                    this.serialPort1.Open();
+                }
+                this.groupBox1.Enabled = !this.serialPort1.IsOpen;
+                //txtsend.Enabled = btnsend.Enabled = comport.IsOpen;
+
+                if (this.serialPort1.IsOpen)
+                {
+                    this.button1.Text = "&C关闭端口";
+                }
+                else
+                {
+                    this.button1.Text = "&O打开端口";
+                }
+                //if (this.serialPort1.IsOpen) txtsend.Focus();
+            }
+            catch (Exception er)
+            {
+                MessageBox.Show("端口打开失败！" + er.Message, "提示");
+            }
+        }
     }
 }
